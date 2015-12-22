@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+ <head>
+	
+  <title>Lord of the Rings Survey</title>
+  
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="Chart/Chart.js-master/Chart.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="functions.js"></script>
+  <!--<link rel="stylesheet" type="text/css" href="web2.css"> -->
+
+</head>
+ <body onload="changeBg()">
+ <div class="survey_head">
+
+<h3> Lord of the Rings Survey </h3>
+ 
+ </div>
+ 
+ <div class="transparent">
+ 
+<form action="" method="" required>
+
+ Lord of the Rings Warrior of Choice? 
+ <br/>
+ <input type="radio" name="hero" value="sauron" /> Sauron
+ <br/>
+ <input type="radio"  name="hero" value="saruman" /> Saruman
+  <br/>
+ <input type="radio" name="hero" value="legolas" /> Legolas
+  <br/>
+<input type="radio" name="hero" value="gandalf" /> Gandalf
+<br/>
+ <input type="radio" name="hero" value="gimli" /> Gimli
+ <br>
+ </form>
+
+<form action="" method="" required> 
+ Choice of living area? 
+ <br/>
+ <input type="radio" name="place" value="mordor" /> Mordor
+ <br/>
+ <input type="radio" name="place" value="helm" /> Helms Deep
+  <br/>
+<input type="radio" name="place" value="shire" /> The Shire
+<br/>
+ <input type="radio" name="place" value="minas" /> Minas Tirith
+<br> 
+<form>
+
+<form action="" method=""> 
+ Weapon of Choice? 
+ <select onchange="getWeaponImage()" id="weapons" name="weapon">
+	<option value="">None</option>
+	<option value="sword">Sword</option>
+	<option value="bow">Bow</option>
+	<option value="staff">Staff</option>
+	<option value="hammer">Hammer</option>
+	<option value="spear">Spear</option>
+	<option value="axe">Battle Axe</option>
+ </select >
+ <form>
+ 
+<div class ="picture">
+<span >
+<img id="image" src="lotr.jpg" height="100" width="150"></img>
+</span>
+<br>
+<button type="button" id="result" onclick="insertValues()"> Submit Vote </button>
+</div>
+
+<div>
+<button type="button" id="result" onclick="warChart()"> View/Update Charts </button>
+<table id="resultsTable">
+		<th>Results </th>
+		<tr>
+		<td>
+		<h3>Warrior Chart </h3>
+	     <canvas id="warriorChart" width="400" height="400"></canvas>	
+		</td>
+	</tr>
+	<tr>
+		<td>
+	   <h3>Weapon Chart</h3>
+	   <canvas id="weaponChart" width="400" height="400"></canvas>
+			</td>
+	    <td>
+	   <h3>Place Chart </h3>
+	   <canvas id="placeChart" width="400" height="400"></canvas>
+		</td>
+	 </tr>
+	</table>	
+	<div>
+ </body>
+</html>
