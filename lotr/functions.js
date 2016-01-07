@@ -35,7 +35,8 @@ function changeBg()
 	}
 
 	
-function insertValues(){ // stores the votes using localStorage object
+function insertValues(){
+	alert("Thank you for your vote!");
 	// get the votes
 	var heros = document.forms[0]; // make sure to use the right index
 	var heroSelected;
