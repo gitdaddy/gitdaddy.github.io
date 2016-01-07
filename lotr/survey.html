@@ -15,55 +15,58 @@
 
 </head>
  <body onload="changeBg()">
- <div class="survey_head">
-
-<h3> Lord of the Rings Survey </h3>
  
- </div>
+ <div class="site-wrapper">
+	<h1> Please Take A Survey </h1>
+		<div class="site-wrapper-inner">
+					<h4> Warrior of Choice? </h4>
+					<form action="" method="">
+
+					 <br/>
+					 <input type="radio" name="hero" value="sauron" /> Sauron
+					 <br/>
+					 <input type="radio"  name="hero" value="saruman" /> Saruman
+					  <br/>
+					 <input type="radio" name="hero" value="legolas" /> Legolas
+					  <br/>
+					<input type="radio" name="hero" value="gandalf" /> Gandalf
+					<br/>
+					 <input type="radio" name="hero" value="gimli" /> Gimli
+					 <br>
+					 </form>
+
+					<form action="" method=""> 
+					<h4> Favorite Place </h4>
+					 <br/>
+					 <input type="radio" name="place" value="mordor" /> Mordor
+					 <br/>
+					 <input type="radio" name="place" value="helm" /> Helms Deep
+					  <br/>
+					<input type="radio" name="place" value="shire" /> The Shire
+					<br/>
+					 <input type="radio" name="place" value="minas" /> Minas Tirith
+					<br> 
+					<form>
+
+					<form action="" method=""> 
+					<h4> Favorite Weapon </h4>
+					 <select onchange="getWeaponImage()" id="weapons" name="weapon">
+						<option value="">None</option>
+						<option value="sword">Sword</option>
+						<option value="bow">Bow</option>
+						<option value="staff">Staff</option>
+						<option value="hammer">Hammer</option>
+						<option value="spear">Spear</option>
+						<option value="axe">Battle Axe</option>
+							</select >
+						<form>
+			</div>
+		</div>
+	</div>
+
+
  
- <div class="transparent">
- 
-<form action="" method="" required>
 
- Lord of the Rings Warrior of Choice? 
- <br/>
- <input type="radio" name="hero" value="sauron" /> Sauron
- <br/>
- <input type="radio"  name="hero" value="saruman" /> Saruman
-  <br/>
- <input type="radio" name="hero" value="legolas" /> Legolas
-  <br/>
-<input type="radio" name="hero" value="gandalf" /> Gandalf
-<br/>
- <input type="radio" name="hero" value="gimli" /> Gimli
- <br>
- </form>
-
-<form action="" method="" required> 
- Choice of living area? 
- <br/>
- <input type="radio" name="place" value="mordor" /> Mordor
- <br/>
- <input type="radio" name="place" value="helm" /> Helms Deep
-  <br/>
-<input type="radio" name="place" value="shire" /> The Shire
-<br/>
- <input type="radio" name="place" value="minas" /> Minas Tirith
-<br> 
-<form>
-
-<form action="" method=""> 
- Weapon of Choice? 
- <select onchange="getWeaponImage()" id="weapons" name="weapon">
-	<option value="">None</option>
-	<option value="sword">Sword</option>
-	<option value="bow">Bow</option>
-	<option value="staff">Staff</option>
-	<option value="hammer">Hammer</option>
-	<option value="spear">Spear</option>
-	<option value="axe">Battle Axe</option>
- </select >
- <form>
  
 <div class ="picture">
 <span >
@@ -79,18 +82,16 @@
 		<th>Results </th>
 		<tr>
 		<td>
-		<h3>Warrior Chart </h3>
-	     <canvas id="warriorChart" width="400" height="400"></canvas>	
+		<h3>Warrior Votes</h3>
+	     <canvas id="warriorChart" width="200" height="200"></canvas>	
 		</td>
-	</tr>
-	<tr>
 		<td>
-	   <h3>Weapon Chart</h3>
-	   <canvas id="weaponChart" width="400" height="400"></canvas>
-			</td>
+	   <h3>Weapon Votes</h3>
+	   <canvas id="weaponChart" width="200" height="200"></canvas>
+		</td>
 	    <td>
-	   <h3>Place Chart </h3>
-	   <canvas id="placeChart" width="400" height="400"></canvas>
+	   <h3>Place Votes </h3>
+	   <canvas id="placeChart" width="200" height="200"></canvas>
 		</td>
 	 </tr>
 	</table>	

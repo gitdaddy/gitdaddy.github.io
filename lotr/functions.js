@@ -4,10 +4,34 @@ var weaponNames = ["sword", "bow", "axe", "spear", "staff", "hammer"];
 var placeNames = ["mordor", "helm", "shire", "minas"]; 
 
 
-
 function changeBg()
 	{
-		//document.body.style.background = "#f3f3f3 url('RING.jpg') no-repeat right top";
+		document.body.style.background = "#f3f3f3 url('RING.jpg') no-repeat right top"; 
+		for(var i = 0; i < heroNames.length; i++)
+		{
+			//alert("Checking: " + heroNames[i] + "is Nan?" + isNaN(localStorage.getItem(heroNames[i])));
+			if(isNaN(localStorage.getItem(heroNames[i])))
+			{
+					localStorage.setItem(heroNames[i], 0);
+			}
+		}
+		for(var i = 0; i < weaponNames.length; i++)
+		{
+			//alert("Checking #" + i + " " + weaponNames[i] + " is Nan? " + isNaN(localStorage.getItem(weaponNames[i])));			
+			if(isNaN(localStorage.getItem(weaponNames[i])))
+			{
+					localStorage.setItem(weaponNames[i], 0);
+			}
+		}
+		for(var i = 0; i < placeNames.length; i++)
+		{
+			//alert("Checking: " + placeNames[i] + "is Nan?" + isNaN(localStorage.getItem(placeNames[i])));
+			if(isNaN(localStorage.getItem(placeNames[i])))
+			{
+					localStorage.setItem(placeNames[i], 0);
+			}
+		}
+			
 	}
 
 	
@@ -30,34 +54,18 @@ function insertValues(){ // stores the votes using localStorage object
         placeSelected = places[i].value;
 		}
 	}
-	alert("Values: " + heroSelected + "  " + placeSelected +"  " + weaponSelected);
+	//alert("Values: " + heroSelected + "  " + placeSelected +"  " + weaponSelected);
+	//alert("Is NAN hero? :" + isNaN(localStorage.getItem(heroSelected)));
 
 	
 	if(typeof(Storage) !== "undefined"){
 	// add it on to the storage
-	if(isNaN(localStorage.getItem(heroSelected)))
-		localStorage.setItem(heroSelected, 1);
-	else
-		localStorage.setItem(heroSelected, parseInt(localStorage.getItem(heroSelected)) + 1);
-
+	localStorage.setItem(heroSelected, parseInt(localStorage.getItem(heroSelected)) + 1);
 	
-	if(isNaN(localStorage.getItem(weaponSelected))){
-		alert("Setting weapon at 1");
-		localStorage.setItem(weaponSelected, 1);		
-	}
-	else
-		localStorage.setItem(weaponSelected, parseInt(localStorage.getItem(weaponSelected)) + 1);
-
+	localStorage.setItem(weaponSelected, parseInt(localStorage.getItem(weaponSelected)) + 1);
 	
-	if(isNaN(localStorage.getItem(placeSelected)))
-		localStorage.setItem(placeSelected, 1);
-	else
-		localStorage.setItem(placeSelected, parseInt(localStorage.getItem(placeSelected)) + 1);
+	localStorage.setItem(placeSelected, parseInt(localStorage.getItem(placeSelected)) + 1);
 
-	
-	alert("Data of hero: " + heroSelected + " is: " + localStorage.getItem(heroSelected));
-	alert("Data of place: " + placeSelected + " is: " + localStorage.getItem(placeSelected));
-	 alert("Data of weapon: " + weaponSelected + " is: " + localStorage.getItem(weaponSelected));
 	}
 	else
 		alert("Your Browser doesn't support on-line local storage!");
@@ -85,10 +93,7 @@ function insertValues(){ // stores the votes using localStorage object
 		location.replace("results.html");
 	}
 	
-	function warChart(){
-	
-	alert("Hero Charts:(sauron) " + parseInt(localStorage.getItem("sauron")));
-	
+	function warChart(){	
 
 	plaChart();
 	weaChart();
@@ -131,42 +136,41 @@ function insertValues(){ // stores the votes using localStorage object
 
 function weaChart(){
 	
-	alert("Weapon Charts:(sword) " + parseInt(localStorage.getItem("sword")));
-
+	//alert("Weapon Charts:(axe) " + localStorage.getItem(weaponNames[2]));
 	
 	var data = [
     {
-        value: parseInt(localStorage.getItem("sword")),
+        value: localStorage.getItem("sword"),
         color:"#F7464A",
         highlight: "#FF5A5E",
         label: "Sword"
     },
     {
-        value: parseInt(localStorage.getItem("bow")),
+        value: localStorage.getItem("bow"),
         color: "#46BFBD",
         highlight: "#5AD3D1",
         label: "Bow"
     },
     {
-        value: parseInt(localStorage.getItem("hammer")),
+        value: localStorage.getItem("hammer"),
         color: "#FDB45C",
         highlight: "#FFC870",
         label: "Hammer"
     },
 	{
-        value: parseInt(localStorage.getItem("staff")),
+        value: localStorage.getItem("staff"),
         color: "#0080ff",
         highlight: "#2b9eff", 
         label: "Staff"
     },
 	{
-        value: parseInt(localStorage.getItem("spear")),
+        value: localStorage.getItem("spear"),
         color: "#aed5fc",
         highlight: "#cde2bd",
-        label: "spear"
+        label: "Spear"
     },
 	{
-        value: parseInt(localStorage.getItem("axe")),
+        value: localStorage.getItem(weaponNames[2]),
         color: "#787777",
         highlight: "#d5bee0",
         label: "Axe"
@@ -179,7 +183,7 @@ function weaChart(){
 
 function plaChart(){
 	
-	alert("Hero Charts:(mordor) " + parseInt(localStorage.getItem("mordor")));
+	//alert("Hero Charts:(mordor) " + parseInt(localStorage.getItem("mordor")));
 
 	var data = [
     {
