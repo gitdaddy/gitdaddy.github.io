@@ -100,31 +100,31 @@ function insertValues(){
 	weaChart();
 	var data = [
     {
-        value: parseInt(localStorage.getItem("sauron")),
+        value: localStorage.getItem("sauron"),
         color:"#F7464A",
         highlight: "#FF5A5E",
         label: "Sauron"
     },
     {
-        value: parseInt(localStorage.getItem("saruman")),
+        value: localStorage.getItem("saruman"),
         color: "#46BFBD",
         highlight: "#5AD3D1",
         label: "Saruman"
     },
     {
-        value: parseInt(localStorage.getItem("legolas")),
+        value: localStorage.getItem("legolas"),
         color: "#FDB45C",
         highlight: "#FFC870",
         label: "Legolas"
     },
 	{
-        value: parseInt(localStorage.getItem("gandalf")),
+        value: localStorage.getItem("gandalf"),
         color: "#0080ff",
         highlight: "#2b9eff", 
         label: "Gandalf"
     },
 	{
-        value: parseInt(localStorage.getItem("gimli")),
+        value: localStorage.getItem("gimli"),
         color: "#aed5fc",
         highlight: "#cde2bd",
         label: "Gimli"
@@ -188,25 +188,25 @@ function plaChart(){
 
 	var data = [
     {
-        value: parseInt(localStorage.getItem("mordor")),
+        value: localStorage.getItem("mordor"),
         color:"#F7464A",
         highlight: "#FF5A5E",
         label: "Mordor"
     },
     {
-        value: parseInt(localStorage.getItem("helm")),
+        value: localStorage.getItem("helm"),
         color: "#46BFBD",
         highlight: "#5AD3D1",
         label: "Helms Deep"
     },
     {
-        value: parseInt(localStorage.getItem("shire")),
+        value: localStorage.getItem("shire"),
         color: "#FDB45C",
         highlight: "#FFC870",
         label: "Shire"
     },
 	{
-        value: parseInt(localStorage.getItem("minas")),
+        value: localStorage.getItem("minas"),
         color: "#c3848e",
         highlight: "#c5b6aa",
         label: "Minas Tirith"
