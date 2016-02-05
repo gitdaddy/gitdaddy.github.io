@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Ship</title>
+  <meta charset="utf-8">
+</head>
+<body style="margin: 0; background-color:black;">
+  <!-- <center><h1 style="color:yellow">Loading...</h1></center> -->
+
+  <script src="js/three.min.js"></script>
+  <script src="js/OrbitControls.js"></script>
+  <script src="ship.js"></script>
+  <script src="asteroid.js"></script>
+  <script src="laser.js"></script>
+  <script src="bolt.js"></script>
+  <script src="js/keyboardstate.js"></script>
+  <script src="js/shaderCode.js"></script>
+
+  <script id="vertexShader" type="x-shader/x-vertex">
+    uniform sampler2D noiseTexture;
+    uniform float noiseScale;
+    uniform sampler2D bumpTexture;
+    uniform float bumpSpeed;
+    uniform float bumpScale;
+    uniform float time;
+    varying vec2 vUv;
+    void main()
+    {
+        vUv = uv;
+
+        vec2 uvTimeShift = vUv + vec2( 1.1, 1.9 ) * time * bumpSpeed;
+        vec4 noiseGeneratorTimeShift = texture2D( noiseTexture, uvTimeShift );
+        vec2 uvNoiseTimeShift = vUv + noiseScale * vec2( noiseGeneratorTimeShift.r, noiseGeneratorTimeShift.g );
+        // below, using uvTimeShift seems to result in more of a "rippling" effect
+        //   while uvNoiseTimeShift seems to result in more of a "shivering" effect
+        vec4 bumpData = texture2D( bumpTexture, uvTimeShift );
+        // move the position along the normal
+        //  but displace the vertices at the poles by the same amount
+        float displacement = ( vUv.y > 0.999 || vUv.y < 0.001 ) ?
+            bumpScale * (0.3 + 0.02 * sin(time)) :
+            bumpScale * bumpData.r;
+        vec3 newPosition = position + normal * displacement;
+
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+    }
+</script>
+
+  <script id="fragmentShader" type="x-shader/x-vertex">
+    uniform sampler2D baseTexture;
+    uniform float baseSpeed;
+    uniform float repeatS;
+    uniform float repeatT;
+    uniform sampler2D noiseTexture;
+    uniform float noiseScale;
+    uniform sampler2D blendTexture;
+    uniform float blendSpeed;
+    uniform float blendOffset;
+    uniform float time;
+    uniform float alpha;
+    varying vec2 vUv;
+    void main()
+    {
+        vec2 uvTimeShift = vUv + vec2( -0.7, 1.5 ) * time * baseSpeed;
+        vec4 noiseGeneratorTimeShift = texture2D( noiseTexture, uvTimeShift );
+        vec2 uvNoiseTimeShift = vUv + noiseScale * vec2( noiseGeneratorTimeShift.r, noiseGeneratorTimeShift.b );
+        vec4 baseColor = texture2D( baseTexture, uvNoiseTimeShift * vec2(repeatS, repeatT) );
+        vec2 uvTimeShift2 = vUv + vec2( 1.3, -1.7 ) * time * blendSpeed;
+        vec4 noiseGeneratorTimeShift2 = texture2D( noiseTexture, uvTimeShift2 );
+        vec2 uvNoiseTimeShift2 = vUv + noiseScale * vec2( noiseGeneratorTimeShift2.g, noiseGeneratorTimeShift2.b );
+        vec4 blendColor = texture2D( blendTexture, uvNoiseTimeShift2 * vec2(repeatS, repeatT) ) - blendOffset * vec4(1.0, 1.0, 1.0, 1.0);
+        vec4 theColor = baseColor + blendColor;
+        theColor.a = alpha;
+        gl_FragColor = theColor;
+    }
+</script>
+
+  <script>
+
+    // Set up the scene, camera, and renderer as global variables.
+    var scene, camera, renderer;
+
+    // variables for loaded objects
+    var tieBomber, xwing, laser = null;
+
+    // array for cloned objects
+    var asteroids = [];
+
+    // flag for cloning asteroids once parent has loaded
+    var needToClone = true;
+
+    // for sound
+    var audio = null;
+
+    // https://stemkoski.github.io/Three.js/Keyboard.html
+    var keyboard = new KeyboardState();
+    var clock = new THREE.Clock();
+
+    init();
+    animate();
+
+    // Sets up the scene.
+    function init() {
+
+      // Create the scene and set the scene size.
+      scene = new THREE.Scene();
+      var WIDTH = window.innerWidth,
+          HEIGHT = window.innerHeight;
+
+      // Create a renderer and add it to the DOM.
+      renderer = new THREE.WebGLRenderer({antialias:true});
+      renderer.setSize(WIDTH, HEIGHT);
+      document.body.appendChild(renderer.domElement);
+
+      // Create a camera, zoom it out from the model a bit, and add it to the scene.
+      camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 20000);
+      camera.position.set(0,6,0);
+      scene.add(camera);
+
+      // Create an event listener that resizes the renderer with the browser window.
+      window.addEventListener('resize', function() {
+        var WIDTH = window.innerWidth,
+            HEIGHT = window.innerHeight;
+        renderer.setSize(WIDTH, HEIGHT);
+        camera.aspect = WIDTH / HEIGHT;
+        camera.updateProjectionMatrix();
+      });
+
+      // Set the background color of the scene.
+      renderer.setClearColor(0x333F47, 1);
+
+      // Create a light, set its position, and add it to the scene.
+      var light = new THREE.PointLight(0xffffff);
+      light.position.set(-100,200,100);
+      scene.add(light);
+
+      // .json files can be loaded using Moveable class.  .js files cannot
+      tieBomber = new Ship("models/tie_fighter.json", scene);
+      asteroid = new Asteroid("models/asteroid.json", scene);
+      laser = new Laser("models/laser.json", scene);
+
+      // clone some asteroids
+      // for (var i = 0; i < 100; i++) {
+      //   asteroids.push(asteroid.clone());
+      // }
+
+      // var loader = new THREE.JSONLoader();
+      // loader.load( "models/horse.js", function(geometry){
+      //   var horse = new THREE.Mesh( geometry, new THREE.MeshNormalMaterial() );
+      //   scene.add(horse);
+      // });
+
+      // Add OrbitControls so that we can pan around with the mouse.
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+
+      // build the skybox Mesh
+      loadSkybox();
+
+
+
+    }
+
+
+    // Renders the scene and updates the render as needed.
+    function animate() {
+
+      // Read more about requestAnimationFrame at http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+      requestAnimationFrame(animate);
+
+      // Object matrix needs to be updated continually
+      tieBomber.model.updateMatrix();
+      asteroid.model.updateMatrix();
+      laser.model.updateMatrix();
+
+      // fire a laser
+      if (tieBomber.lasers[0] != undefined) {
+        for (var i = 0; i < tieBomber.lasers.length; i++) {
+          tieBomber.lasers[i].advance();
+          tieBomber.lasers[i].model.updateMatrix();
+        }
+      }
+
+      // rotate and update the asteroids
+      // Using an asteroid class will make this much smoother.  Take an object as the constructor parameter.
+      //    Include: rotation, velocity, size.
+        for (var i = 0; i < 100; i++) {
+          if (asteroids[i] != undefined) {
+            asteroids[i].rotation.set(asteroids[i].rotation.x + (Math.random() * 0.01),
+                                      asteroids[i].rotation.y + (Math.random() * 0.01),
+                                      asteroids[i].rotation.z + (Math.random() * 0.01));
+            asteroids[i].translateX(Math.random() * 0.1);
+            asteroids[i].translateY(Math.random() * 0.1);
+            asteroids[i].translateZ(Math.random() * 0.1);
+            asteroids[i].updateMatrix();
+          }
+        }
+
+      // User input callback
+      tieBomber.keyPress();
+
+      // clone the asteroids once the parent has loaded and give them a random rotation angle
+      if (asteroid != undefined && needToClone == true) {
+        for (var i = 0; i < 100; i++) {
+          asteroids[i] = asteroid.clone();
+          asteroids[i].rotation.set(Math.random() * 360, Math.random() * 360, Math.random() * 360);
+          scene.add(asteroids[i]);
+        }
+        needToClone = false;
+      }
+      
+      // Render the scene.
+      renderer.render(scene, camera);
+      controls.update();
+
+    }
+
+  </script>
+  
+</body>
+</html>
