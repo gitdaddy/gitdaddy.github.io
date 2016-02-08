@@ -161,7 +161,16 @@ a.button span {
 #view-on-github span {
   background: transparent url(../images/octocat-icon.png) 12px 50% no-repeat;
 }
+#toLinked span {
+  background: transparent url(http://www.loyno.edu/~mfllits/assets/shared/images/css/icons/linkedin-16x16.gif) 12px 50% no-repeat;
+}
+#toYouTube span {
+  background: transparent url(http://calendar.loyno.edu/assets/shared/images/css/icons/youtube-24x24.png) 12px 50% no-repeat;
+}
 #view-on-github {
+  margin-right: 0;
+}
+#toYouTube {
   margin-right: 0;
 }
 
