@@ -1,2 +1,0 @@
-# StarFox
-WebGL Game
