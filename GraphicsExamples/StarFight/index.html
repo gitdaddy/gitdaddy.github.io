@@ -6,7 +6,7 @@
 </head>
 <body style="margin: 0;">
 
- <canvas id="radar" height="230" width="230" style="position: absolute; bottom: 0px;"> Your Browser doesn't support canvas </canvas>
+ <canvas id="radar" height="200" width="200" style="position: absolute; bottom: 0px;"> Your Browser doesn't support canvas </canvas>
 
   <script src="three.js-master/build/three.min.js"></script>
  <script src="js/radar.js"></script>
@@ -40,14 +40,24 @@
     // 1-4 players?
     var numPlayers = 1;
 
-    // Hack
+    // Hack for switching from 2 player to 1
     var refreshPageOnChange = false;
 
     // Controls
     var pads;
 
     // variables for loaded objects
-    var tieBomber, xwing, arwing, asteroid, laser, laser2, bullet, temp, skyBox, medRock = null;
+    var tieBomber, xwing, arwing, asteroid, laser, laser2, bullet, temp, skyBox, skyBoxSpace, skyBoxLand, medRock = null;
+
+    // used for logic determining controls and asteroids in different worlds
+    var SKYVAL = 0;
+
+    // speed of asteroids and ships
+    var ROCKSPEED = 2;
+    var HALFSPEED = 1;
+    var maxShipSpeed = 1;
+    var WORLDSPACE = 500;
+    var HALFWORLD = 250;
 
     // array for cloned objects
     var asteroids = [];
@@ -67,7 +77,7 @@
     // set up radar
     var canvas = document.getElementById("radar");
     var ctx = canvas.getContext("2d");
-    var maxBounds = 2000.0;
+    var maxBounds = 350.0;
     var radius = 100;
     var counter = 0;
 
@@ -96,7 +106,7 @@
       camera2 = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 20000);
       camera.position.set(0, 6, 0);
       scene.add(camera2);
-
+ 
       // Create an event listener that resizes the renderer with the browser window.
       window.addEventListener('resize', function() {
         var WIDTH = window.innerWidth,
@@ -141,6 +151,7 @@
       
       // build the skybox Mesh
       var imagePrefix = "images/nebula_";
+
       var directions  = ["right1", "left2", "top3", "bottom4", "front5", "back6" ];  // Use this for skybox with dif side images
       var imageSuffix = ".png";
       var skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 ); 
@@ -148,13 +159,36 @@
       var materialArray = [];
       for (var i = 0; i < 6; i++)
         materialArray.push( new THREE.MeshBasicMaterial({
-          // map: THREE.ImageUtils.loadTexture( imagePrefix + "stars.png" ),
           map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ), // Use this for skybox with dif side images
           side: THREE.BackSide
         }));
       var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
-      skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
-      scene.add( skyBox );
+      skyBoxSpace = new THREE.Mesh( skyGeometry, skyMaterial );
+      scene.add( skyBoxSpace );
+
+
+
+
+      // build the skybox Mesh for Land
+      imagePrefix = "images/land_";
+      var directions  = ["right1", "left2", "top3", "bottom4", "front5", "back6" ];  // Use this for skybox with dif side images
+      skyGeometry = new THREE.CubeGeometry( 1500, 300, 1500 ); 
+      
+      materialArray = [];
+      for (var i = 0; i < 6; i++)
+        materialArray.push( new THREE.MeshBasicMaterial({
+          map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ), // Use this for skybox with dif side images
+          side: THREE.BackSide
+        }));
+      var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+      skyBoxLand = new THREE.Mesh( skyGeometry, skyMaterial );
+      // scene.add( skyBoxLand );
+      skyBox = skyBoxLand;
+
+
+
+
+
 
       // Add OrbitControls so that we can pan around with the mouse.
       controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -168,8 +202,8 @@
       requestAnimationFrame(gameLoop);
 
 
-        draw();
-        control();
+      draw();
+      control();
       advance();
 
 			  
@@ -188,7 +222,7 @@
           x2 *= 100.0/maxBounds;
           y2 *= 100.0/maxBounds;
           counter = counter % radius;
-        twoRadar(x, y, x2, y2, ctx, canvas, counter, radius);
+        twoRadar(x, y, x2, y2, ctx, canvas, counter, radius, asteroids, maxBounds);
           counter++;
 
         if (refreshPageOnChange == false)
@@ -214,9 +248,6 @@
         camera.updateProjectionMatrix();
         camera2.updateProjectionMatrix();
         
-        // setViewport parameters:
-        //  lower_left_x, lower_left_y, viewport_width, viewport_height
-
         renderer.setViewport( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT );
         renderer.clear();
         
@@ -235,7 +266,10 @@
           x *= 100.0/maxBounds;
           y *= 100.0/maxBounds;
           counter = counter % radius;
-          radar(x, y, ctx, canvas, counter, radius);
+
+          radar(x, y, ctx, canvas, counter, radius, asteroids, maxBounds);
+
+
           counter++;
 
         // rez the ship if it dies
@@ -261,13 +295,10 @@
     }
 
   </script>
-
-  <!-- indicators of other ship -->
   
   <!-- A little background music... -->
   <audio autoplay id="good_luck">
-    <!--<source src="goodLuck.mp3" type="audio/mpeg"> -->
-    <!-- <source src="star_wars.mp3" type="audio/mpeg" id="good_luck"> -->
+    <source src="goodLuck.mp3" type="audio/mpeg"> 
   </audio>
 
 </body>
