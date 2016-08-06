@@ -1,5 +1,9 @@
 "use strict";
 
+function deg2rad(value) {
+  return ((3.14159 / 180) * (value))
+}
+
 function advance() {
     // play sounds
     var sound = document.getElementById("good_luck");
@@ -30,7 +34,83 @@ function advance() {
     	deadLasers--;
     }
 
+    var numRocks = asteroids.length;
+    for (var a = 0; a < numRocks; ++a) {
+      //wrapping
+        if (asteroids[a].model != undefined) {
+          var rockPosZ = 0 + asteroids[a].model.position.z * Math.cos(deg2rad(asteroids[a].model.rotation.z));
+          var rockPosX = 0 + asteroids[a].model.position.x * Math.cos(deg2rad(asteroids[a].model.rotation.z));
+          var boundPos = HALFWORLD;
+
+          if (-rockPosX > boundPos) {
+            asteroids[a].model.position.x *= -1;
+            asteroids[a].model.position.x -= 10;
+          }
+          else if ( rockPosX < -boundPos) {
+            asteroids[a].model.position.x *= -1;
+            asteroids[a].model.position.x += 10;
+          }
+          if (-rockPosZ > boundPos) {
+            asteroids[a].model.position.z *= -1;
+            asteroids[a].model.position.z -= 10;
+          }
+          else if ( rockPosZ < -boundPos) {
+            asteroids[a].model.position.z *= -1;
+            asteroids[a].model.position.z += 10;
+          }
+          if (asteroids[a].model.position.y < -HALFWORLD) {
+            asteroids[a].model.position.y *= -1;
+            asteroids[a].model.position.z *= -1;
+            asteroids[a].model.position.x *= -1;
+          }
+          else if (asteroids[a].model.position.y > HALFWORLD) {
+            asteroids[a].model.position.y *= -1;
+            asteroids[a].model.position.z *= -1;
+            asteroids[a].model.position.x *= -1;
+          }
+        }
+    }
+
+    if(skyBox == skyBoxSpace) { // On space level
+	// wrapping for tieBomber
+	var shipPosZ = 0 + tieBomber.model.position.z * Math.cos(deg2rad(tieBomber.model.rotation.z));
+	var shipPosX = 0 + tieBomber.model.position.x * Math.cos(deg2rad(tieBomber.model.rotation.z));
+	var boundPos = HALFWORLD;
+	if (-shipPosX > boundPos || shipPosX > boundPos) {
+	    tieBomber.model.position.x *= -1;
+	    laser.model.position.x *= -1;
+	}
+	if (-shipPosZ > boundPos || shipPosZ > boundPos) {
+	    tieBomber.model.position.z *= -1;
+	    laser.model.position.z *= -1;
+	}
+	if (tieBomber.model.position.y > HALFWORLD || tieBomber.model.position.y < -HALFWORLD) {
+	    tieBomber.model.position.y *= -1;
+	    laser.model.position.y *= -1;
+	}
+    }
+
     if (numPlayers == 2) {
+	if(skyBox == skyBoxSpace) { // On space level
+	    // wrapping for arwing
+	    var shipPosZ = 0 + arwing.model.position.z * Math.cos(deg2rad(arwing.model.rotation.z));
+	    var shipPosX = 0 + arwing.model.position.x * Math.cos(deg2rad(arwing.model.rotation.z));
+	    var boundPos = HALFWORLD;
+	    if (-shipPosX > boundPos || shipPosX > boundPos) {
+		arwing.model.position.x *= -1;
+		laser2.model.position.x *= -1;
+	    }
+	    if (-shipPosZ > boundPos || shipPosZ > boundPos) {
+		arwing.model.position.z *= -1;
+		laser2.model.position.z *= -1;
+	    }
+	    if (arwing.model.position.y > HALFWORLD || arwing.model.position.y < -HALFWORLD) {
+		arwing.model.position.y *= -1;
+		laser2.model.position.y *= -1;
+	    }
+	}
+
+      // laser clean up
       deadLasers = 0;
       if (arwing != undefined && arwing.lasers[0] != undefined) {
         for (var i = 0; i < arwing.lasers.length; i++) {
@@ -63,7 +143,7 @@ function advance() {
     tieBomber.advance();
     laser.advance();
 
-    if (numPlayers == 1)
+   if (numPlayers == 1 && skyBox != skyBoxLand)
       skyBox.position.set(tieBomber.model.position.x, tieBomber.model.position.y, tieBomber.model.position.z);
 
     // particle explosion
@@ -73,8 +153,6 @@ function advance() {
     }
 
     // rotate and update the asteroids
-    // Using an asteroid class will make this much smoother.  Take an object as the constructor parameter.
-    //    Include: rotation, velocity, size.
     for (var i = 0; i < asteroids.length; i++) {
 	if(asteroids[i].model.rotation.x != undefined)
 	    asteroids[i].rotateMove();
@@ -170,28 +248,16 @@ function advance() {
     for (var a = 0; a < asteroids.length; a++) {
       if(asteroids[a].model != undefined && tieBomber.model != undefined) // Ensure creation
             if(tieBomber.colBox.intersectsBox(asteroids[a].colBox)) {// Check collision
-                // tieBomber.velocity.dx = tieBomber.velocity.dy = tieBomber.velocity.dz = 0;
-                // scene.remove(tieBomber.model);
                 tieBomber.kill();
                 parts.push(new ExplodeAnimation(asteroids[a].model.position.x, asteroids[a].model.position.y, asteroids[a].model.position.z));
-                // audio = new Audio('asteroid_explosion.mp3');
-                // audio.play();
-                // audio = new Audio('Wilhelm-Scream.mp3');
-                // audio.play();
                 asteroids[a].model.position.x = 10000000;
             }
 	
 	if(numPlayers == 2) {
 	    if(asteroids[a].model != undefined && arwing.model != undefined) // Ensure creation
 		if(arwing.colBox.intersectsBox(asteroids[a].colBox)) {// Check collision
-		    // arwing.velocity.dx = arwing.velocity.dy = arwing.velocity.dz = 0;
-		    // scene.remove(arwing.model);
 		    arwing.kill();
 		    parts.push(new ExplodeAnimation(asteroids[a].model.position.x, asteroids[a].model.position.y, asteroids[a].model.position.z));
-		    // audio = new Audio('asteroid_explosion.mp3');
-		    // audio.play();
-		    // audio = new Audio('fox-ahhh.mp3');
-		    // audio.play();
 		    asteroids[a].model.position.x = 10000000;
 		}
 	}

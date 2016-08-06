@@ -1,6 +1,9 @@
 "use strict";
 
 var CHARGED = 25;
+var oldZ = 0;
+var oldY = 0;
+var oldX = 0;
 
 class Ship {
 	constructor(type, scene) {
@@ -23,20 +26,14 @@ class Ship {
 
       that.colBox = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
       that.colBox.setFromObject(that.model);
-      // that.thing = new THREE.BoundingBoxHelper(that.model);
-      // scene.add(that.thing);
       });
 	}
 
   advance() {
-    // this.model.position.z = this.model.position.z + this.velocity.dz;
     this.model.translateZ(this.velocity.dz);
     this.model.translateX(this.velocity.dx);
     this.model.translateY(this.velocity.dy);
     this.colBox.setFromObject(this.model);
-    // this.thing.update();
-    // this.model.position.x = this.model.position.x + this.velocity.dx;
-    // this.model.position.y = this.model.position.y + this.velocity.dy;
   }
 
   kill() {
@@ -65,12 +62,16 @@ class Ship {
 
       // move forwards/backwards and rotate left/right
       if ( keyboard.pressed("E") ) {
-        this.velocity.setDz(-moveDistance);
-        laser.velocity.setDz(-moveDistance);
+        if (this.velocity.dz > -maxShipSpeed) {
+          this.velocity.setDz(-moveDistance);
+          laser.velocity.setDz(-moveDistance);
+        }
       }
       if ( keyboard.pressed("Q") ) {
-        this.velocity.setDz(moveDistance);
-        laser.velocity.setDz(moveDistance);
+        if (this.velocity.dz < maxShipSpeed) {
+          this.velocity.setDz(moveDistance);
+          laser.velocity.setDz(moveDistance);
+        }
       }
       if ( keyboard.pressed("X") ) {
         this.model.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
@@ -87,32 +88,65 @@ class Ship {
         this.model.rotateOnAxis( new THREE.Vector3(1,0,0), rotateAngle);
         laser.model.rotateOnAxis( new THREE.Vector3(1,0,0), rotateAngle);
         this.orientationYZ += rotateAngle;
+        oldX = this.model.rotation._x;
+        oldY = this.model.rotation._y;
+        oldZ = this.model.rotation._z;
       }
+      // if (keyboard.up("W") ) {
+      //   // this.model.rotation.set(oldX, oldY, oldZ);
+      //   // if (this.model.rotation.x < 3.1415 && this.model.rotation.x > 0)
+      //   //   this.model.rotation.set(-0,this.model.rotation.y,-0);
+      //   // else if (this.model.rotation.x == 0)
+      //   //   this.model.rotation.set(0,this.model.rotation.y,0);
+      //   // else if (this.model.rotation > 0)
+      //   //   this.model.rotation.set(3.14159, this.model.rotation,3.14159);
+      //   // else if (this.model.rotation < 0)
+      //   //   this.model.rotation.set(-3.14159, this.model.rotation,-3.14159);                    
+      // }
       if ( keyboard.pressed("S") ) {
         this.model.rotateOnAxis( new THREE.Vector3(1,0,0), -rotateAngle);
         laser.model.rotateOnAxis( new THREE.Vector3(1,0,0), -rotateAngle);
         this.orientationYZ -= rotateAngle;
       }
+      // if (keyboard.up("S") ) {
+      //   // if (this.model.rotation.z > 0)
+      //     // this.model.rotation.set(0,this.model.rotation.y,0);
+      //   // else
+      //     // this.model.rotation.set(3.14159,this.model.rotation.y,3.14159);
+      // }
       if ( keyboard.pressed("A") ) {
         this.model.rotateOnAxis( new THREE.Vector3(0,0,1), rotateAngle * 2);
         laser.model.rotateOnAxis( new THREE.Vector3(0,0,1), rotateAngle * 2);
       }
+      // else if ( keyboard.pressed("A") ) {
+      //   this.model.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
+      //   laser.model.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
+      // }
       if ( keyboard.pressed("D") ) {
         this.model.rotateOnAxis( new THREE.Vector3(0,0,1), -rotateAngle * 2);
         laser.model.rotateOnAxis( new THREE.Vector3(0,0,1), -rotateAngle * 2);
       }
+      // else if ( keyboard.pressed("D") ) {
+      //   this.model.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
+      //   laser.model.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
+      // }
       
 
       // Controller Support
       if (pad != undefined) {
         if (pad.buttons[5] != undefined && pad.buttons[5].pressed == true ) {
-          this.velocity.setDz(-moveDistance);
-          laser.velocity.setDz(-moveDistance);
+        if (this.velocity.dz > -maxShipSpeed) {
+            this.velocity.setDz(-moveDistance);
+            laser.velocity.setDz(-moveDistance);
+          }
         }
         if (pad.buttons[4] != undefined && pad.buttons[4].pressed == true ) {
-          this.velocity.setDz(moveDistance);
-          laser.velocity.setDz(moveDistance);
+        if (this.velocity.dz < maxShipSpeed) {
+            this.velocity.setDz(moveDistance);
+            laser.velocity.setDz(moveDistance);
+          }
         }
+          this.model.rotateOnAxis( new THREE.Vector3(0,0,1), -pad.axes[0] / (dec/2) );
         if ( pad.axes[2] < -0.5 ) { // left/right
           this.model.rotateOnAxis( new THREE.Vector3(0,1,0), -pad.axes[2] / dec );
           laser.model.rotateOnAxis( new THREE.Vector3(0,1,0), -pad.axes[2] / dec );
@@ -132,7 +166,6 @@ class Ship {
           this.orientationYZ -= rotateAngle;
         }
         if ( pad.axes[0] < -0.2 ) {
-          this.model.rotateOnAxis( new THREE.Vector3(0,0,1), -pad.axes[0] / (dec/2) );
           laser.model.rotateOnAxis( new THREE.Vector3(0,0,1), -pad.axes[0] / (dec/2) );
         }
         if ( pad.axes[0] > 0.2 ) {
@@ -151,7 +184,6 @@ class Ship {
         }
         if (this.charge > CHARGED + 100) {
           temp.material.visible = true;
-          // alert(temp.material.visible);
         }
       }
 
@@ -170,7 +202,6 @@ class Ship {
           temp.material.visible = false;
         }
         else {
-          // if (this.bullets < 5) {
             this.bullets++;
             audio = new Audio('tie_fire.mp3');
             audio.play();
@@ -185,13 +216,6 @@ class Ship {
         }
       }
       
-      // reset ship position
-      // if ( keyboard.pressed("Z") )
-      // {
-      //   this.model.position.set(0,0,0);
-      //   this.model.rotation.set(0,0,0);
-      // }
-      
       var relativeCameraOffset = new THREE.Vector3(0,1,6);
 
       var cameraOffset = relativeCameraOffset.applyMatrix4( this.model.matrixWorld );
@@ -200,11 +224,5 @@ class Ship {
       camera.position.y = cameraOffset.y;
       camera.position.z = cameraOffset.z;
       camera.lookAt( this.model.position );
-      
-      // camera.updateMatrix();
-      // camera.updateProjectionMatrix();
-          
-      // controls.update();
-      // stats.update();
     }
 }
