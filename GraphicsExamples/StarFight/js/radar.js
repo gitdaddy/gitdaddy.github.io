@@ -44,10 +44,10 @@ function twoRadar(x, y, x2, y2, ctx, canvas, counter, radius, asteroids, maxBoun
 
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-    ctx.fillStyle = 'green';
+    ctx.fillStyle = 'black';
     ctx.fill();
     ctx.lineWidth = 5;
-    ctx.strokeStyle = '#003300';
+    ctx.strokeStyle = '#00CC00';
     ctx.stroke();
 
     ctx.beginPath();
@@ -101,10 +101,10 @@ function radar(x, y, ctx, canvas, counter, radius, asteroids, maxBounds) {
 
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-    ctx.fillStyle = 'green';
+    ctx.fillStyle = 'black';
     ctx.fill();
     ctx.lineWidth = 5;
-    ctx.strokeStyle = '#003300';
+    ctx.strokeStyle = '#00CC00';
     ctx.stroke();
 
     ctx.beginPath();

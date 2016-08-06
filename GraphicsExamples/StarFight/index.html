@@ -3,8 +3,6 @@
 <head>
   <title>Ship</title>
   <meta charset="utf-8">
-</head>
-<body style="margin: 0;">
 
  <canvas id="radar" height="200" width="200" style="position: absolute; bottom: 0px;"> Your Browser doesn't support canvas </canvas>
 
@@ -33,11 +31,10 @@
   <script src="MTLLoader.js"></script>
 
   <script>
-
     // Set up the scene, camera, and renderer as global variables.
     var scene, camera, camera2, renderer;
 
-    // 1-4 players?
+    // 1-2 players
     var numPlayers = 1;
 
     // Hack for switching from 2 player to 1
@@ -167,8 +164,6 @@
       scene.add( skyBoxSpace );
 
 
-
-
       // build the skybox Mesh for Land
       imagePrefix = "images/land_";
       var directions  = ["right1", "left2", "top3", "bottom4", "front5", "back6" ];  // Use this for skybox with dif side images
@@ -186,14 +181,9 @@
       skyBox = skyBoxLand;
 
 
-
-
-
-
       // Add OrbitControls so that we can pan around with the mouse.
       controls = new THREE.OrbitControls(camera, renderer.domElement);
     }
-
 
     // Renders the scene and updates the render as needed.
     function gameLoop() {
@@ -205,11 +195,8 @@
       draw();
       control();
       advance();
-
-			  
       
       // Render the scene.  These lines will mess things up if put in a different function
-
       if (numPlayers == 2) {
 
           // radar
@@ -296,6 +283,8 @@
 
   </script>
   
+</head>
+<body style="margin: 0;">
   <!-- A little background music... -->
   <audio autoplay id="good_luck">
     <source src="goodLuck.mp3" type="audio/mpeg"> 
