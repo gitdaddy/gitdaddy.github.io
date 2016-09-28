@@ -229,8 +229,8 @@ footer a:hover {
 /* =========== Sections Divs ==================*/
 .title-items-section{
   margin: auto; 
-  min-height: 400px;
-  background: url('../images/codeback.jpg') 50% 0 fixed;
+  min-height: 500px;
+  background: url('../images/polyscapeback.jpg') 50% 0 fixed;
   width: 100%;
   padding-top: 80px;
 }
@@ -238,10 +238,7 @@ footer a:hover {
 
 .project-section {
   flex-direction: row;
-  background: -webkit-linear-gradient(right top, #48dc46, white); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(top right, #48dc46, white); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(top right, #48dc46, white); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to top right, #48dc46, white);
+  background-color: #d1d1d1;
 }
 
 .exp-section {
@@ -253,10 +250,7 @@ footer a:hover {
 .tech-section{
   display: flex;
   flex-direction: column;
-  background: -webkit-linear-gradient(left top, #4acbde, white); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(bottom right, #4acbde, white); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(bottom right, #4acbde, white); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom right, #4acbde, white);
+  background-color: #d1d1d1;
 }
 
 /*======== Techs style =======*/
@@ -400,7 +394,7 @@ footer a:hover {
 
 .project-item:hover {
   max-height: 1000px;
-  background-color: rgba(206, 206, 206, 0.5);
+  background-color: #ffe9e9;
   border-radius: 30px;
 }
 
@@ -432,11 +426,10 @@ footer a:hover {
   flex-direction: row;
   max-height: 80px;
   width: 100%;
-  background-color: #4acbde;
-
-  background: -webkit-linear-gradient(left top, #4acbde, white); /* For Safari 5.1 to 6.0 */
-  /*background: -o-linear-gradient(bottom right, #4acbde, white); /* For Opera 11.1 to 12.0 */*/
-  /*background: -moz-linear-gradient(bottom right, #4acbde, white); /* For Firefox 3.6 to 15 */*/
+  /*background-color: #4acbde;*/
+  /*background: -webkit-linear-gradient(left top, #4acbde, white);*/ /* For Safari 5.1 to 6.0 */
+  /*background: -o-linear-gradient(bottom right, #4acbde, white); /* For Opera 11.1 to 12.0 */
+  /*background: -moz-linear-gradient(bottom right, #4acbde, white); /* For Firefox 3.6 to 15 */
   /*background: linear-gradient(to bottom right, #4acbde, white);*/
 }
 
@@ -537,7 +530,7 @@ footer a:hover {
   display: flex;
   /*flex-direction: row;*/
   min-height: 150px;
-  background: url('../images/codeback.jpg') 50% 0 fixed;
+  background: url('../images/polyscapeback.jpg') 50% 0 fixed;
   width: 100%;
   padding-top: 40px;
 }
