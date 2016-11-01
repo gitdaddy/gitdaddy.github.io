@@ -27,7 +27,7 @@ function mark_asteroids(asteroids, maxBounds){
                 z = convertY(z);
 
                 ctx.font = "10px Arial";
-                ctx.strokeText('x',rock_x, rock_z);
+                ctx.strokeText('ø',x, z);
             }
         }
 }
