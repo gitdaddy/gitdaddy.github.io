@@ -17,9 +17,7 @@ function mark_asteroids(asteroids, maxBounds){
             var x = asteroids[i].model.position.x * (100.0/maxBounds); // scale them down
             var z = -asteroids[i].model.position.z * (100.0/maxBounds);
 
-             //d=sqrt((xp−xc)2+(yp−yc)2)
             var d = Math.sqrt((x*x)+(z*z));
-            debugger;
             // check d^2 > r^2 = outside < = inside
             if((d * d) < radius * radius) // test
             {
