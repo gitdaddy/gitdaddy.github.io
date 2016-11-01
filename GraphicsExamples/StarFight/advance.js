@@ -6,14 +6,14 @@ function deg2rad(value) {
 
 function advance() {
     // play sounds
-    var sound = document.getElementById("good_luck");
-    sound.onended = function() {
-      if(!music) {
-        var s = new Audio('star_wars.mp3');
-        s.play();
-        music = true;
-      }     
-    }
+    // var sound = document.getElementById("good_luck");
+    // sound.onended = function() {
+    //   if(!music) {
+    //     var s = new Audio('star_wars.mp3');
+    //     s.play();
+    //     music = true;
+    //   }     
+    // }
 
     // fire a laser
     var deadLasers = 0;
