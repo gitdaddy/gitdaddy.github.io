@@ -44,8 +44,8 @@ class Ship {
     parts.push(new ExplodeAnimation(this.model.position.x, this.model.position.y, this.model.position.z, true));
     audio = new Audio('asteroid_explosion.mp3');
     audio.play();
-    audio = new Audio('Wilhelm-Scream.mp3');
-    audio.play();
+    //audio = new Audio('Wilhelm-Scream.mp3');
+    //audio.play();
     this.alive = false;
   }
 
@@ -92,44 +92,21 @@ class Ship {
         oldY = this.model.rotation._y;
         oldZ = this.model.rotation._z;
       }
-      // if (keyboard.up("W") ) {
-      //   // this.model.rotation.set(oldX, oldY, oldZ);
-      //   // if (this.model.rotation.x < 3.1415 && this.model.rotation.x > 0)
-      //   //   this.model.rotation.set(-0,this.model.rotation.y,-0);
-      //   // else if (this.model.rotation.x == 0)
-      //   //   this.model.rotation.set(0,this.model.rotation.y,0);
-      //   // else if (this.model.rotation > 0)
-      //   //   this.model.rotation.set(3.14159, this.model.rotation,3.14159);
-      //   // else if (this.model.rotation < 0)
-      //   //   this.model.rotation.set(-3.14159, this.model.rotation,-3.14159);                    
-      // }
+    
       if ( keyboard.pressed("S") ) {
         this.model.rotateOnAxis( new THREE.Vector3(1,0,0), -rotateAngle);
         laser.model.rotateOnAxis( new THREE.Vector3(1,0,0), -rotateAngle);
         this.orientationYZ -= rotateAngle;
       }
-      // if (keyboard.up("S") ) {
-      //   // if (this.model.rotation.z > 0)
-      //     // this.model.rotation.set(0,this.model.rotation.y,0);
-      //   // else
-      //     // this.model.rotation.set(3.14159,this.model.rotation.y,3.14159);
-      // }
       if ( keyboard.pressed("A") ) {
         this.model.rotateOnAxis( new THREE.Vector3(0,0,1), rotateAngle * 2);
         laser.model.rotateOnAxis( new THREE.Vector3(0,0,1), rotateAngle * 2);
       }
-      // else if ( keyboard.pressed("A") ) {
-      //   this.model.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
-      //   laser.model.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
-      // }
+
       if ( keyboard.pressed("D") ) {
         this.model.rotateOnAxis( new THREE.Vector3(0,0,1), -rotateAngle * 2);
         laser.model.rotateOnAxis( new THREE.Vector3(0,0,1), -rotateAngle * 2);
       }
-      // else if ( keyboard.pressed("D") ) {
-      //   this.model.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
-      //   laser.model.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
-      // }
       
 
       // Controller Support
@@ -212,7 +189,6 @@ class Ship {
             scene.add(bolt.model);
             this.charge = 0;
             this.soundPlayed = false;
-          // }
         }
       }
       

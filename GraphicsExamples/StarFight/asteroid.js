@@ -3,7 +3,6 @@
 class Asteroid {
 	constructor(type, scene) {
 		var that = this;
-
 			var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.setBaseUrl( 'models/' );
 				mtlLoader.setPath( 'models/' );
@@ -21,8 +20,6 @@ class Asteroid {
 					});
 
 				});
-
-
 	}
 
 	clone() {

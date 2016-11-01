@@ -1,0 +1,53 @@
+.pf-body {
+  display: flex;
+  flex-direction: column;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+   background: url('../images/polyscapeback2.jpg') 50% 0;
+}
+
+#pf-container{
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  min-width: 800px;
+  background-color: grey;
+}
+
+.pf-items {
+  margin: auto; 
+  min-height: 500px;
+  width: 100%;
+  padding-top: 80px;
+}
+
+.pf-game{
+	display: flex;
+	flex-direction: column;
+	padding: 50px;
+}
+
+.expand-info {
+    max-height: 45px;
+    overflow: hidden;
+    transition: height 0.3s;
+    -webkit-transition: max-height 0.3s ease-in-out;
+    -moz-transition: height 0.3s;
+    -o-transition: height 0.3s;
+}
+
+.expand-info:hover{
+    max-height: 1000px;
+    background-color: grey;
+}
+
+.results{
+
+}
+
+.total-guesses{
+
+}
+
+.input{
+
+}

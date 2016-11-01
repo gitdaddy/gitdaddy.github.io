@@ -41,9 +41,6 @@ class Arwing {
     scene.remove(this.model);
     parts.push(new ExplodeAnimation(this.model.position.x, this.model.position.y, this.model.position.z, true));
     audio = new Audio('asteroid_explosion.mp3');
-    audio.play();
-    audio = new Audio('fox-ahhh.mp3');
-    audio.play();
     this.alive = false;
   }
 

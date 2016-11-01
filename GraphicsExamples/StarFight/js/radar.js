@@ -14,15 +14,21 @@ function mark_asteroids(asteroids, maxBounds){
     if(asteroids != null)
         for (var i = 0; i < asteroids.length; i++)
         {
-            var rock_x = asteroids[i].model.position.x * (100.0/maxBounds); // scale them down
-            var rock_z = -asteroids[i].model.position.z * (100.0/maxBounds);
+            var x = asteroids[i].model.position.x * (100.0/maxBounds); // scale them down
+            var z = -asteroids[i].model.position.z * (100.0/maxBounds);
 
-            rock_x = convertX(rock_x); // convert to canvas coordinates
-            rock_z = convertY(rock_z);
+             //d=sqrt((xp−xc)2+(yp−yc)2)
+            var d = Math.sqrt((x*x)+(z*z));
+            debugger;
+            // check d^2 > r^2 = outside < = inside
+            if((d * d) < radius * radius) // test
+            {
+                x = convertX(x); // convert to canvas coordinates
+                z = convertY(z);
 
-            ctx.font = "10px Arial";
-
-            ctx.strokeText('x',rock_x, rock_z);
+                ctx.font = "10px Arial";
+                ctx.strokeText('x',rock_x, rock_z);
+            }
         }
 }
 

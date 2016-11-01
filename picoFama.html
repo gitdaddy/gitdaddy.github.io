@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<script type="text/javascript" src="js/main.js"></script>
+		<link rel="stylesheet" type="text/css" href="stylesheets/main.css" media="screen">
+		<link rel="stylesheet" type="text/css" href="stylesheets/pfStyles.css" media="screen">
+  		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+		<!-- <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" media="screen"> -->
+		<!-- BootStrap, Jquery, and Angular scripts -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<!-- svg start for icons -->
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0;visibility:hidden">
+			<defs>
+			<linearGradient id="white" x1="0%" y1="0%" x2="100%" y2="0%">
+				<stop offset="0%"
+				style="stop-color:white;" />
+			</linearGradient>
+			<!-- Linkedin -->
+			<symbol xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 256 256" id="linkedin-white-icon"> <path fill="url(#white)"
+			d="M236,0H20C8.954,0,0,8.954,0,20v216c0,11.045,8.954,20,20,20h216c11.046,0,20-8.955,20-20V20  C256,8.954,247.046,0,236,0z M78.295,217.796H40.957V97.837h37.339V217.796z M59.641,81.44C47.658,81.439,38,71.747,38,59.816  c0-11.919,9.658-21.613,21.641-21.613c11.938,0,21.62,9.694,21.62,21.613C81.261,71.748,71.579,81.44,59.641,81.44z M218,217.796  h-37.271v-58.321c0-13.924-0.275-31.82-19.389-31.82c-19.416,0-22.375,15.152-22.375,30.791v59.353h-37.257V97.837h35.757v16.396  h0.508c4.975-9.438,17.15-19.377,35.301-19.377c37.746,0,44.727,24.834,44.727,57.142V217.796z"></path> </symbol>
+			<symbol xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 556 556" id="house-white-icon">
+			<path fill="url(#white)" d="M511.114,300.251c-9.94,0-17.638,7.663-17.638,17.651v241.105H368.401v-98.453c0-9.236-7.697-17.31-17.002-17.31h-90.435
+				c-9.948,0-17.96,8.073-17.96,17.31v98.453h-124.76v-233.1c0-9.306-7.69-17.036-17.638-17.036c-9.298,0-16.995,7.73-16.995,17.036
+				v250.752c0,9.305,7.697,17.036,16.995,17.036h160.358c9.298,0,16.995-7.731,16.995-17.036v-98.454h55.801v98.454
+				c0,9.305,7.697,17.036,17.639,17.036h159.715c9.299,0,16.995-7.731,16.995-17.036V317.903
+				C528.109,307.915,520.413,300.251,511.114,300.251z"/>
+				<path fill="url(#white)" d="M607.003,314.003L467.819,174.225V78.919c0-9.921-8.019-17.583-17.96-17.583c-9.305,0-17.001,7.663-17.001,17.583v60.345
+					L318.046,23.774c-3.518-3.558-7.697-5.474-11.864-5.474c-4.81,0-8.983,1.984-12.507,5.474L5.361,312.087
+					c-6.917,6.91-7.375,17.994,0,24.357c6.411,7.389,17.454,6.91,24.371,0l276.45-275.793l275.807,278.393
+					c2.873,2.874,7.054,4.516,12.507,4.516c4.81,0,8.976-1.642,12.507-4.516C613.42,332.613,613.899,320.982,607.003,314.003z"/>
+					</symbol>
+					<symbol xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 556 556" id="github-white-icon">
+					</symbol>
+					</defs>
+				</svg>
+				<link rel="shortcut icon" href="icons/logo.png">
+				<title>Daniel Marsden</title>
+			</head>
+			<body class="pf-body">
+				<!-- HEADER -->
+				<header role="banner">
+					<!-- NAVBAR -->
+					<div class="navbar-wrapper">
+						<div class="navbar-header">
+							</div> <!-- navbar header -->
+							<div class="navbar-right-side">
+								<a class="nav-icon" href="index.html" title="Home">
+									<svg xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#house-white-icon"></use>
+									</svg>
+								</a>
+								<a class="nav-icon" href="https://www.linkedin.com/in/daniel-marsden-639a8a8a?trk=hp-identity-name" title="Linkedin">
+									<svg xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#linkedin-white-icon"></use>
+									</svg>
+								</a>
+							</div>
+							</div> <!-- navbar-wrapper -->
+							</header> <!-- END HEADER -->
+							<div id="pf-container">
+								<div class="pf-items" data-type="background" data-speed="5">
+									<div>
+										<h1 >Pico Fama</h1>
+										<p class="box-text">The 4 Digit Number Game</p>
+
+									</div>
+									<!-- results -->
+									<div class="pf-game" ng-app="pfApp" ng-controller="resultsCtrl">
+										<div hidden class="begin">
+											<p class="box-text"> 
+											<!-- Known: {{ result }} --> Count:{{ num_guesses }}
+											</p>
+										</div>
+										<div ng-if="guesses.length > 0" class="animate-repeat"
+											ng-repeat="guess in guesses">
+											<p class="box-text">
+											{{guess.nums}} P: {{guess.p}} F: {{guess.f}}
+											</p>
+										</div>
+											<button class="btn btn-info" id="start">Start Game </button>
+											<input class="guess-input begin" type="search" hidden placeholder="4-Digit number" id="myInput" maxlength="4" ng-model="dataIn" ng-keypress="makeGuess($event)" />
+										</div>
+										<div>
+										<p class="box-text exp-list-item">
+										Hover Mouse to Show Info: <br>
+										The goal of the game is to guess the 4 digit number with the lowest number of gueses.
+										- Pico: You guessed a correct number in the right position.
+										- Fama: You guessed a correct number but is not in the right place.
+										You must use your pico fama score to figure out the number.
+										<br>
+										Rules: Numbers are all unique and from 1 - 9. Every guess must follow suit.
+										</p>
+										</div>
+									</div>
+									<script src="js/picofama.js"></script>
+								</div>
+								<footer><p> Authors and Contributors: Daniel Marsden</p>
+								<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+							</div>
+						</footer>
+						</div> <!-- Container -->
+					</body>
+				</html>

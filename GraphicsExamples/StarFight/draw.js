@@ -2,20 +2,30 @@
 
 function draw() {
 // Object matrix needs to be updated continually
-    tieBomber.model.updateMatrix();
-    asteroid.model.updateMatrix();
-    laser.model.updateMatrix();
-    temp.updateMatrix();
+    if(tieBomber.model){
+        tieBomber.model.updateMatrix();
+    }
+    if(asteroid.model){
+        asteroid.model.updateMatrix();
+    }
 
-    var numRocks = 20;
+    if(laser.model){
+        laser.model.updateMatrix();
+    }
+    
+    if(temp){
+       temp.updateMatrix();
+    }
+
+    var numRocks = 10;
 
     if (numPlayers == 2 && arwing != undefined) {
     arwing.model.updateMatrix();
     laser2.model.updateMatrix();
-    numRocks = 20;
+    numRocks = 10;
     }
 
-    // clone the asteroids once the parent has loaded and give them a random rotation angl
+    // clone the asteroids once the parent has loaded and give them a random rotation angle
     if(asteroid != undefined && needToClone == true) {
     	for(var i = 0; i < numRocks; i++) {
     	    asteroids[i] = new asteroidClone(asteroid.clone());
