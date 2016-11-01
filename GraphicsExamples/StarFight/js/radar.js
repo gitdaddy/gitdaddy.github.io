@@ -19,7 +19,7 @@ function mark_asteroids(asteroids, maxBounds){
 
             var d = Math.sqrt((x*x)+(z*z));
             // check d^2 > r^2 = outside < = inside
-            if((d * d) < radius * radius) // test
+            if((d * d) < radius * radius + 5) // 5 for border
             {
                 x = convertX(x); // convert to canvas coordinates
                 z = convertY(z);

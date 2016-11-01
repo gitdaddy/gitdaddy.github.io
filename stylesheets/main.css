@@ -189,6 +189,7 @@ footer a:hover {
 }
 
 .rounded-icon {
+  margin: 10px;
   border-radius: 30px;
   width : 100px;
   height : 100px;
@@ -384,7 +385,7 @@ footer a:hover {
 }
 
 .project-item {
-    max-height: 100px;
+    max-height: 120px;
     overflow: hidden;
     transition: height 0.5s;
     -webkit-transition: max-height 0.5s ease-in-out;
