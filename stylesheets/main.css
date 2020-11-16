@@ -231,10 +231,18 @@ footer a:hover {
 /* =========== Sections Divs ==================*/
 .title-items-section{
   margin: auto;
-  min-height: 500px;
+  min-height: 300px;
   background: url('../images/polyscapeback.jpg') 50% 0 fixed;
   width: 100%;
   padding-top: 80px;
+}
+
+.section-space{
+  margin: auto;
+  min-height: 200px;
+  background: url('../images/polyscapeback.jpg') 50% 0 fixed;
+  width: 100%;
+  /* padding-top: 80px; */
 }
 
 
