@@ -541,4 +541,7 @@ footer a:hover {
   padding-top: 40px;
 }
 
-/*========= PICO Fama Styles ==========*/
+ .exp-date-text{
+  font-size: 20px;
+  line-height: 30px;
+ }
