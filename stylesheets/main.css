@@ -78,19 +78,9 @@ ul, ol, dl {
 
 /* COMMON STYLES */
 
-.hr-png {
-  height: 1px;
-  padding-bottom: 1em;
-  margin-top: 1em;
-  line-height: 1px;
-  background: transparent url('../images/hr.png') 50% 0 no-repeat;
-  border: none;
-}
-
 strong {
   font-weight: bold;
 }
-
 
 
 /* GENERAL ELEMENT TYPE STYLES */
@@ -290,8 +280,8 @@ footer a:hover {
 .single-exp {
   display: flex;
   flex-direction: row;
-  padding-right: 150px;
-  padding-left: 150px;
+  padding-right: 30px;
+  padding-left: 30px;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -299,11 +289,31 @@ footer a:hover {
 .exp-logo {
   width: 200px;
   height: 200px;
+  padding-right: 50px;
+  padding-left: 30px;
+}
+
+.edu-exp {
+  display: flex;
+  flex-direction: row;
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.auto-logo {
+  width: auto;
+  height: auto;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .logo{
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   margin: 20px;
 }
 
